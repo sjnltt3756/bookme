@@ -6,6 +6,10 @@
 <body>
 <h2>책 추천</h2>
 
+<a th:href="@{/preference}">
+    <button>선호 장르 설정</button>
+</a>
+
 <form th:action="@{/recommend}" method="get">
     <input type="text" name="query" placeholder="책 제목을 검색하세요" />
     <button type="submit">검색</button>
