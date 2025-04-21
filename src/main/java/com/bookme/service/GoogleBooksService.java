@@ -20,7 +20,9 @@ public class GoogleBooksService {
     public List<Book> searchBooks(String query) {
         List<Book> results = new ArrayList<>();
         try {
-            String apiUrl = "https://www.googleapis.com/books/v1/volumes?q=" + URLEncoder.encode(query, StandardCharsets.UTF_8);
+            String apiUrl = "https://www.googleapis.com/books/v1/volumes?q=" +
+                    URLEncoder.encode(query, StandardCharsets.UTF_8) +
+                    "&langRestrict=ko";
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(apiUrl)).build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
