@@ -19,12 +19,12 @@ public class RecommendService {
     private final GenrePreferenceRepository preferenceRepository;
     private final UserRepository userRepository;
 
-    public List<Book> getRecommendations(UserDetails userDetails, String query) {
+    public List<Book> getRecommendations(UserDetails userDetails, String query, int page, int pageSize) {
+        int startIndex = page * pageSize;
+
         if (query != null && !query.isBlank()) {
-            // 검색어 기반 추천
-            return googleBooksService.searchBooks(query);
+            return googleBooksService.searchBooks(query, startIndex, pageSize);
         } else {
-            // 선호 장르 기반 추천
             User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
             List<String> genres = preferenceRepository.findByUser(user)
                     .stream()
@@ -33,9 +33,11 @@ public class RecommendService {
 
             List<Book> books = new ArrayList<>();
             for (String genre : genres) {
-                books.addAll(googleBooksService.searchBooks(genre));
+                books.addAll(googleBooksService.searchBooks(genre, startIndex, pageSize));
+                if (books.size() >= pageSize) break;
             }
-            return books;
+
+            return books.stream().limit(pageSize).toList(); // 혹시 여러 장르일 경우 제한
         }
     }
 }

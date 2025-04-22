@@ -17,12 +17,15 @@ import java.util.List;
 @Service
 public class GoogleBooksService {
 
-    public List<Book> searchBooks(String query) {
+    public List<Book> searchBooks(String query, int startIndex, int maxResults) {
         List<Book> results = new ArrayList<>();
         try {
             String apiUrl = "https://www.googleapis.com/books/v1/volumes?q=" +
                     URLEncoder.encode(query, StandardCharsets.UTF_8) +
-                    "&langRestrict=ko";
+                    "&langRestrict=ko" +
+                    "&startIndex=" + startIndex +
+                    "&maxResults=" + maxResults;
+
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(apiUrl)).build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -31,23 +34,18 @@ public class GoogleBooksService {
             JsonNode root = mapper.readTree(response.body());
 
             for (JsonNode item : root.path("items")) {
-                JsonNode volumeInfo = item.path("volumeInfo");
+                String title = item.path("volumeInfo").path("title").asText("제목 없음");
 
-                String title = volumeInfo.path("title").asText("제목 없음");
-
-                // authors 배열 처리
-                List<String> authorsList = new ArrayList<>();
-                JsonNode authorsNode = volumeInfo.path("authors");
+                List<String> authors = new ArrayList<>();
+                JsonNode authorsNode = item.path("volumeInfo").path("authors");
                 if (authorsNode.isArray()) {
                     for (JsonNode author : authorsNode) {
-                        authorsList.add(author.asText());
+                        authors.add(author.asText());
                     }
                 }
 
-                // 썸네일 처리
-                String thumbnail = volumeInfo.path("imageLinks").path("thumbnail").asText(null);
-
-                results.add(new Book(title, authorsList, thumbnail));
+                String thumbnail = item.path("volumeInfo").path("imageLinks").path("thumbnail").asText(null);
+                results.add(new Book(title, authors, thumbnail));
             }
         } catch (Exception e) {
             e.printStackTrace();

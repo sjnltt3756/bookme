@@ -19,10 +19,16 @@ public class RecommendController {
 
     @GetMapping("/recommend")
     public String recommend(@RequestParam(value = "query", required = false) String query,
+                            @RequestParam(value = "page", defaultValue = "0") int page,
                             @AuthenticationPrincipal UserDetails userDetails,
                             Model model) {
-        List<Book> books = recommendService.getRecommendations(userDetails, query);
+
+        int pageSize = 10;
+        List<Book> books = recommendService.getRecommendations(userDetails, query, page, pageSize);
+
         model.addAttribute("books", books);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("query", query); // 검색 유지용
         return "recommend";
     }
 }

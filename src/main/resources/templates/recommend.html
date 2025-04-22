@@ -1,28 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>도서 추천</title>
+    <meta charset="UTF-8">
+    <title>책 추천</title>
+    <link rel="stylesheet" th:href="@{/css/netflix-style.css}" />
 </head>
 <body>
-<h2>책 추천</h2>
-
-<a th:href="@{/preference}">
-    <button>선호 장르 설정</button>
-</a>
-
-<form th:action="@{/recommend}" method="get">
-    <input type="text" name="query" placeholder="책 제목을 검색하세요" />
-    <button type="submit">검색</button>
-</form>
-
-<div th:if="${books}">
-    <ul>
-        <li th:each="book : ${books}">
-            <img th:if="${book.thumbnail}" th:src="${book.thumbnail}" alt="cover" />
-            <p><strong th:text="${book.title}">제목</strong></p>
-            <p th:text="${#lists.isEmpty(book.authors) ? '저자 없음' : #strings.listJoin(book.authors, ', ')}">저자</p>
-        </li>
-    </ul>
+<h2>추천 도서</h2>
+<div style="padding: 0 20px 20px;">
+    <a th:href="@{/preference}">
+        <button style="background-color: #e50914; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
+            🎯 선호 장르 설정
+        </button>
+    </a>
 </div>
+<div class="search-bar">
+    <form th:action="@{/recommend}" method="get">
+        <input type="text" name="query" placeholder="책 제목을 검색하세요" th:value="${query}"/>
+        <button type="submit">검색</button>
+    </form>
+</div>
+
+<div class="book-row">
+    <div class="book-card" th:each="book : ${books}">
+        <img th:if="${book.thumbnail}" th:src="${book.thumbnail}" alt="book cover" />
+        <div class="book-info">
+            <div th:text="${book.title}">책 제목</div>
+            <div th:text="${#lists.isEmpty(book.authors) ? '저자 없음' : #strings.listJoin(book.authors, ', ')}">저자</div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/pagination :: pager(currentPage=${currentPage}, query=${query})"></div>
+
 </body>
 </html>
