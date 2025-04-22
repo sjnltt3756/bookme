@@ -25,6 +25,7 @@
 - ✅ Google Books API 기반 도서 검색 (제목/저자)
 - ✅ 추천 도서 자동 제공 (선호 장르 기반)
 - ✅ 페이지네이션 및 도서 수 보기 설정
+- ✅ 찜하기 (wishlist)
 
 ---
 
@@ -40,16 +41,21 @@ src
     │       ├── controller
     │       │   ├── PreferenceController.java      # 장르 설정 컨트롤러
     │       │   ├── RecommendController.java       # 추천/검색 페이지 컨트롤러
-    │       │   └── UserController.java            # 로그인/회원가입 처리
+    │       │   ├── UserController.java            # 로그인/회원가입 처리
+    │       │   └── BookLikeController.java        # 찜하기 기능 컨트롤러
     │       ├── dto
     │       │   ├── Book.java                      # 책 정보 DTO
     │       │   └── GenreOption.java               # 장르 선택 항목
     │       ├── entity
     │       │   ├── GenrePreference.java           # 유저의 장르 설정 Entity
-    │       │   └── User.java                      # 사용자 Entity
+    │       │   ├── User.java                      # 사용자 Entity
+    │       │   └── BookLike.java                  # 찜한 책 Entity
+    │       ├── entity.enums
+    │       │   └── LikeResult.java                # 찜 결과 Enum
     │       ├── repository
     │       │   ├── GenrePreferenceRepository.java # 장르 설정 JPA 리포지토리
-    │       │   └── UserRepository.java            # 사용자 JPA 리포지토리
+    │       │   ├── UserRepository.java            # 사용자 JPA 리포지토리
+    │       │   └── BookLikeRepository.java        # 찜한 책 JPA 리포지토리
     │       ├── security
     │       │   ├── CustomUserDetails.java         # UserDetails 구현체
     │       │   └── CustomUserDetailsService.java  # 로그인 인증 서비스
@@ -57,20 +63,23 @@ src
     │       │   ├── GoogleBooksService.java        # Google Books API 호출 로직
     │       │   ├── PreferenceService.java         # 장르 관련 서비스
     │       │   ├── RecommendService.java          # 도서 추천 서비스
-    │       │   └── UserService.java               # 회원가입 서비스
-    │       └── BookmeApplication.java             # Spring Boot 시작점
+    │       │   ├── UserService.java               # 회원가입 서비스
+    │       │   └── BookLikeService.java           # 찜한 책 관련 서비스
+    │       └── BookmeApplication.java             
     │
     ├── resources
     │   ├── static
     │   │   ├── netflix-style.css                  # 기본 스타일
     │   │   ├── netflix-auth.css                   # 로그인/회원가입 스타일
-    │   │   └── netflix-preference.css             # 장르 설정 스타일
+    │   │   ├── netflix-preference.css             # 장르 설정 스타일
     │   ├── templates
     │   │   ├── fragments
     │   │   │   └── pagination.html                # 페이지네이션 템플릿
     │   │   ├── login.html                         # 로그인 페이지
     │   │   ├── signup.html                        # 회원가입 페이지
     │   │   ├── preference.html                    # 선호 장르 설정 페이지
-    │   │   └── recommend.html                     # 추천/검색 페이지
+    │   │   ├── recommend.html                     # 추천/검색 페이지
+    │   │   └── wishlist.html                      # 찜한 책 목록 페이지
     │   └── application.yml                        # 환경설정 파일
 </pre>
+
