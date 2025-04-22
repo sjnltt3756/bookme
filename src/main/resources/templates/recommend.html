@@ -25,17 +25,23 @@
     </form>
 </div>
 
-<div class="book-row">
+<div class="book-grid">
     <div class="book-card" th:each="book : ${books}">
-        <img th:if="${book.thumbnail}" th:src="${book.thumbnail}" alt="book cover" />
+        <a th:href="${book.infoLink}" target="_blank">
+            <img th:if="${book.thumbnail}" th:src="${book.thumbnail}" alt="book cover" />
+        </a>
         <div class="book-info">
             <div th:text="${book.title}">책 제목</div>
             <div th:text="${#lists.isEmpty(book.authors) ? '저자 없음' : #strings.listJoin(book.authors, ', ')}">저자</div>
         </div>
+        <div class="popup">
+            <span th:text="'📘 ' + ${book.title}"></span><br/>
+            <span th:text="${#lists.isEmpty(book.authors) ? '' : '✍ ' + #strings.listJoin(book.authors, ', ')}"></span>
+        </div>
     </div>
 </div>
 
-<div th:replace="fragments/pagination :: pager(currentPage=${currentPage}, query=${query})"></div>
+<div th:replace="fragments/pagination :: pager(currentPage=${currentPage}, query=${query}, category=${category})"></div>
 
 </body>
 </html>
