@@ -24,7 +24,7 @@ public class RecommendController {
                             @AuthenticationPrincipal UserDetails userDetails,
                             Model model) {
 
-        int pageSize = 20;
+        int pageSize = 16;
         List<Book> books = recommendService.getRecommendations(userDetails, query, category, page, pageSize);
 
         model.addAttribute("books", books);

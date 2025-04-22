@@ -45,7 +45,8 @@ public class GoogleBooksService {
                 }
 
                 String thumbnail = item.path("volumeInfo").path("imageLinks").path("thumbnail").asText(null);
-                results.add(new Book(title, authors, thumbnail));
+                String infoLink = item.path("volumeInfo").path("infoLink").asText(null);
+                results.add(new Book(title, authors, thumbnail, infoLink));
             }
         } catch (Exception e) {
             e.printStackTrace();
