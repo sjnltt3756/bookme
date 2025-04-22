@@ -19,11 +19,12 @@ public class RecommendService {
     private final GenrePreferenceRepository preferenceRepository;
     private final UserRepository userRepository;
 
-    public List<Book> getRecommendations(UserDetails userDetails, String query, int page, int pageSize) {
+    public List<Book> getRecommendations(UserDetails userDetails, String query, String category, int page, int pageSize) {
         int startIndex = page * pageSize;
 
         if (query != null && !query.isBlank()) {
-            return googleBooksService.searchBooks(query, startIndex, pageSize);
+            String fullQuery = category.equals("author") ? "inauthor:" + query : "intitle:" + query;
+            return googleBooksService.searchBooks(fullQuery, startIndex, pageSize);
         } else {
             User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
             List<String> genres = preferenceRepository.findByUser(user)

@@ -3,16 +3,19 @@
 <body>
 <div th:fragment="pager(currentPage, query)">
     <div class="pagination" th:with="startPage=${T(java.lang.Math).max(0, currentPage - 2)}, endPage=${startPage + 4}">
-        <a th:if="${currentPage > 0}" th:href="@{/recommend(page=${currentPage - 1}, query=${query})}">◀ 이전</a>
+        <div class="pagination-block">
+            <a th:if="${currentPage > 0}"
+               th:href="@{/recommend(page=${currentPage - 1}, query=${query}, category=${category})}">◀ 이전</a>
 
-        <span th:each="pageNum : ${#numbers.sequence(startPage, endPage)}">
-        <a th:href="@{/recommend(page=${pageNum}, query=${query})}"
-           th:text="${pageNum + 1}"
-           th:classappend="${pageNum == currentPage} ? ' active' : ''">
-        </a>
-    </span>
+            <span th:each="pageNum : ${#numbers.sequence(startPage, endPage)}">
+            <a th:href="@{/recommend(page=${pageNum}, query=${query}, category=${category})}"
+               th:text="${pageNum + 1}"
+               th:classappend="${pageNum == currentPage} ? ' active' : ''">
+            </a>
+        </span>
 
-        <a th:href="@{/recommend(page=${currentPage + 1}, query=${query})}">다음 ▶</a>
+            <a th:href="@{/recommend(page=${currentPage + 1}, query=${query}, category=${category})}">다음 ▶</a>
+        </div>
     </div>
 
     <style>
