@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>내 찜 목록</title>
+    <link rel="stylesheet" th:href="@{/css/netflix-style.css}" />
+</head>
+<body>
+<h2>📌 내가 찜한 책</h2>
+
+<div class="book-grid">
+    <div class="book-card" th:each="book : ${likedBooks}">
+        <a th:href="${book.infoLink}" target="_blank">
+            <img th:src="${book.thumbnail}" alt="book cover" />
+        </a>
+        <div class="book-info">
+            <div th:text="${book.title}">제목</div>
+            <div th:text="${#lists.isEmpty(book.authors) ? '저자 없음' : #strings.listJoin(book.authors, ', ')}">저자</div>
+        </div>
+        <form th:action="@{/like}" method="post">
+            <input type="hidden" name="title" th:value="${book.title}" />
+            <input type="hidden" name="thumbnail" th:value="${book.thumbnail}" />
+            <input type="hidden" name="infoLink" th:value="${book.infoLink}" />
+            <input type="hidden" name="authors" th:value="${#strings.listJoin(book.authors, ',')}" />
+            <button type="submit" class="like-btn">💔 찜 취소</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

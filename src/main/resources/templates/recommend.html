@@ -5,12 +5,31 @@
     <title>책 추천</title>
     <link rel="stylesheet" th:href="@{/css/netflix-style.css}" />
 </head>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const msg = document.getElementById("like-message");
+        if (msg) {
+            setTimeout(() => {
+                msg.style.opacity = "0";  // 투명하게 만들기
+                setTimeout(() => msg.remove(), 500);  // 0.5초 후 삭제
+            }, 1000); // 1초 기다림
+        }
+    });
+</script>
 <body>
+<div id="like-message" th:if="${likeMessage}" style="background-color: #e50914; color: white; padding: 10px 20px; text-align: center; transition: opacity 0.5s ease;">
+    <span th:text="${likeMessage}">찜 처리 결과</span>
+</div>
 <h2>추천 도서</h2>
-<div style="padding: 0 20px 20px;">
+<div style="padding: 0 20px 20px; display: flex; gap: 10px;">
     <a th:href="@{/preference}">
         <button style="background-color: #e50914; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
             🎯 선호 장르 설정
+        </button>
+    </a>
+    <a th:href="@{/wishlist}">
+        <button style="background-color: #444; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
+            ❤️ 찜한 책 보기
         </button>
     </a>
 </div>
@@ -38,6 +57,14 @@
         <div class="book-info">
             <div th:text="${book.title}">책 제목</div>
             <div th:text="${#lists.isEmpty(book.authors) ? '저자 없음' : #strings.listJoin(book.authors, ', ')}">저자</div>
+            <form th:action="@{/like}" method="post" style="margin-top: 8px;">
+                <input type="hidden" name="title" th:value="${book.title}" />
+                <input type="hidden" name="thumbnail" th:value="${book.thumbnail}" />
+                <input type="hidden" name="infoLink" th:value="${book.infoLink}" />
+                <input type="hidden" name="authors" th:value="${#strings.listJoin(book.authors, ',')}" />
+                <input type="hidden" name="mode" value="like" />
+                <button type="submit" class="like-btn">❤️ 찜하기</button>
+            </form>
         </div>
         <div class="popup">
             <span th:text="'📘 ' + ${book.title}"></span><br/>
