@@ -1,0 +1,42 @@
+body {
+    background-color: #141414;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+}
+.preference-container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #222;
+    padding: 30px;
+    border-radius: 8px;
+}
+.genre-group h3 {
+    color: #e50914;
+}
+.genre-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.genre-options label {
+    background-color: #333;
+    padding: 10px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.genre-options input[type="checkbox"] {
+    margin-right: 8px;
+}
+button[type="submit"] {
+    display: block;
+    margin: 30px auto 0;
+    padding: 12px 24px;
+    background-color: #e50914;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
