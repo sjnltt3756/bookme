@@ -6,15 +6,18 @@
 ---
 
 ## 🛠 사용 기술
-- **IntelliJ IDEA**
-- **Spring Boot 3.4.1**
-- **JDK 17**
-- **Thymeleaf**
-- **Spring Security**
-- **JPA (Hibernate)**
-- **MySQL**
-- **Google Books API**
-- **HTML/CSS**
+
+### 🔙 Backend
+- Spring Boot 3.4.1
+- Spring Security
+- Spring Data JPA (Hibernate)
+- MySQL
+- Google Books API
+
+### 🌐 Frontend
+- Thymeleaf
+- HTML / CSS
+- JavaScript
 
 ---
 
