@@ -8,7 +8,7 @@
                th:href="@{/recommend(page=${currentPage - 1}, query=${query}, category=${category})}">◀ 이전</a>
 
             <span th:each="pageNum : ${#numbers.sequence(startPage, endPage)}">
-            <a th:href="@{/recommend(page=${pageNum}, query=${query}, category=${category})}"
+            <a th:href="@{/recommend(page=${pageNum}, query=${query}, category=${category}, size=${size})}"
                th:text="${pageNum + 1}"
                th:classappend="${pageNum == currentPage} ? ' active' : ''">
             </a>

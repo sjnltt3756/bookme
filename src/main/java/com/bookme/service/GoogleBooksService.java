@@ -17,14 +17,14 @@ import java.util.List;
 @Service
 public class GoogleBooksService {
 
-    public List<Book> searchBooks(String query, int startIndex, int maxResults) {
+    public List<Book> searchBooks(String query, int startIndex, int size) {
         List<Book> results = new ArrayList<>();
         try {
             String apiUrl = "https://www.googleapis.com/books/v1/volumes?q=" +
                     URLEncoder.encode(query, StandardCharsets.UTF_8) +
-                    "&langRestrict=ko" +
                     "&startIndex=" + startIndex +
-                    "&maxResults=" + maxResults;
+                    "&maxResults=" + size +
+                    "&langRestrict=ko";
 
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(apiUrl)).build();

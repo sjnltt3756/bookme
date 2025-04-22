@@ -21,6 +21,11 @@
             <option value="author" th:selected="${category == 'author'}">저자</option>
         </select>
         <input type="text" name="query" placeholder="검색어 입력" th:value="${query}" />
+        <select name="size" style="padding: 10px; margin-left: 10px;">
+            <option value="8" th:selected="${size == 8}">8개 보기</option>
+            <option value="16" th:selected="${size == 16}">16개 보기</option>
+            <option value="24" th:selected="${size == 24}">24개 보기</option>
+        </select>
         <button type="submit">검색</button>
     </form>
 </div>

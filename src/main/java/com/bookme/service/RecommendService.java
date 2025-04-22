@@ -34,11 +34,16 @@ public class RecommendService {
 
             List<Book> books = new ArrayList<>();
             for (String genre : genres) {
-                books.addAll(googleBooksService.searchBooks(genre, startIndex, pageSize));
+                // 한 장르에서 pageSize 이상 채우면 그만 가져오기
+                List<Book> genreBooks = googleBooksService.searchBooks(genre, startIndex, pageSize);
+                for (Book book : genreBooks) {
+                    books.add(book);
+                    if (books.size() >= pageSize) break;
+                }
                 if (books.size() >= pageSize) break;
             }
 
-            return books.stream().limit(pageSize).toList(); // 혹시 여러 장르일 경우 제한
+            return books.stream().limit(pageSize).toList();
         }
     }
 }
