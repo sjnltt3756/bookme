@@ -6,8 +6,9 @@ Netflix 스타일 UI를 통해 직관적이고 감각적인 사용 경험을 제
 ---
 
 ## 🛠 사용 기술
-
-- **Spring Boot 3**
+- **IntelliJ IDEA**
+- **Spring Boot 3.4.1**
+- **JDK 17**
 - **Thymeleaf**
 - **Spring Security**
 - **JPA (Hibernate)**
