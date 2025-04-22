@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>선호 장르 설정</title>
+    <meta charset="UTF-8">
+    <title>선호 장르 선택</title>
+    <link rel="stylesheet" th:href="@{/css/netflix-preference.css}" />
 </head>
 <body>
-<h2>선호하는 장르를 선택하세요</h2>
-
-<form th:action="@{/preference}" method="post">
-    <!-- groupedGenres: Map<String, List<GenreOption>> -->
-    <div th:each="group : ${groupedGenres}">
-        <h3 th:text="${group.key}">카테고리명</h3>
-        <div th:each="genre : ${group.value}">
-            <label>
-                <!-- 체크박스가 선택된 장르에 대해 checked 속성 추가 -->
-                <input type="checkbox" name="genres" th:value="${genre.keywordKo}"
-                       th:checked="${selectedGenres.contains(genre.keywordKo)}" />
-                <span th:text="${genre.nameKo}">장르명</span>
-            </label><br/>
+<div class="preference-container">
+    <h2>선호 장르를 선택하세요</h2>
+    <form th:action="@{/preference}" method="post">
+        <div th:each="group : ${groupedGenres}" class="genre-group">
+            <h3 th:text="${group.key}">카테고리</h3>
+            <div class="genre-options">
+                <label th:each="genre : ${group.value}">
+                    <input type="checkbox" name="genres" th:value="${genre.keywordKo}" th:checked="${selectedGenres.contains(genre.keywordKo)}" />
+                    <span th:text="${genre.nameKo}">장르명</span>
+                </label>
+            </div>
         </div>
-        <hr/>
-    </div>
-    <button type="submit">저장</button>
-</form>
+        <button type="submit">저장</button>
+    </form>
+</div>
 </body>
 </html>

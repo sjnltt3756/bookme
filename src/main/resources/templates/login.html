@@ -1,23 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login</title>
-    <link rel="stylesheet" href="/css/style.css" />
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <link rel="stylesheet" th:href="@{/css/netflix-auth.css}" />
 </head>
 <body>
-<h2>로그인</h2>
-
-<form th:action="@{/login}" method="post">
-    <label>아이디: <input type="text" name="username" /></label><br/>
-    <label>비밀번호: <input type="password" name="password" /></label><br/>
-    <button type="submit">로그인</button>
-</form>
-
-<hr/>
-
-<p>계정이 없으신가요?</p>
-<a th:href="@{/signup}">
-    <button>회원가입</button>
-</a>
+<div class="auth-container">
+    <h2>로그인</h2>
+    <form th:action="@{/login}" method="post">
+        <input type="text" name="username" placeholder="아이디" required />
+        <input type="password" name="password" placeholder="비밀번호" required />
+        <button type="submit">로그인</button>
+    </form>
+    <p>계정이 없으신가요?</p>
+    <a th:href="@{/signup}"><button class="alt-button">회원가입</button></a>
+</div>
 </body>
 </html>
