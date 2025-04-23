@@ -20,6 +20,15 @@
 <div id="like-message" th:if="${likeMessage}" style="background-color: #e50914; color: white; padding: 10px 20px; text-align: center; transition: opacity 0.5s ease;">
     <span th:text="${likeMessage}">찜 처리 결과</span>
 </div>
+<div style="text-align: right; padding: 10px 20px;">
+    <span th:if="${#authorization.expression('isAuthenticated()')}">
+        👤 <strong th:text="${#authentication.name}">사용자</strong>님 |
+        <a th:href="@{/logout}" style="color: #e50914;">로그아웃</a>
+    </span>
+    <span th:if="${#authorization.expression('isAnonymous()')}">
+        <a th:href="@{/login}" style="color: #e50914;">로그인</a>
+    </span>
+</div>
 <h2>추천 도서</h2>
 <div style="padding: 0 20px 20px; display: flex; gap: 10px;">
     <a th:href="@{/preference}">
@@ -27,11 +36,19 @@
             🎯 선호 장르 설정
         </button>
     </a>
-    <a th:href="@{/wishlist}">
+    <!-- 로그인한 경우 -->
+    <a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/wishlist}">
         <button style="background-color: #444; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
             ❤️ 찜한 책 보기
         </button>
     </a>
+
+    <!-- 비로그인인 경우 -->
+    <button th:if="${#authorization.expression('isAnonymous()')}"
+            onclick="alert('로그인이 필요합니다.'); location.href='/login';"
+            style="background-color: #444; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
+        ❤️ 찜한 책 보기
+    </button>
 </div>
 <div class="search-bar">
     <form th:action="@{/recommend}" method="get">
@@ -57,7 +74,8 @@
         <div class="book-info">
             <div th:text="${book.title}">책 제목</div>
             <div th:text="${#lists.isEmpty(book.authors) ? '저자 없음' : #strings.listJoin(book.authors, ', ')}">저자</div>
-            <form th:action="@{/like}" method="post" style="margin-top: 8px;">
+            <!-- 로그인한 경우 -->
+            <form th:if="${#authorization.expression('isAuthenticated()')}" th:action="@{/like}" method="post" style="margin-top: 8px;">
                 <input type="hidden" name="title" th:value="${book.title}" />
                 <input type="hidden" name="thumbnail" th:value="${book.thumbnail}" />
                 <input type="hidden" name="infoLink" th:value="${book.infoLink}" />
@@ -65,6 +83,14 @@
                 <input type="hidden" name="mode" value="like" />
                 <button type="submit" class="like-btn">❤️ 찜하기</button>
             </form>
+
+            <!-- 비로그인인 경우 -->
+            <button th:if="${#authorization.expression('isAnonymous()')}"
+                    onclick="alert('로그인이 필요합니다.'); location.href='/login';"
+                    class="like-btn"
+                    style="margin-top: 8px;">
+                ❤️ 찜하기
+            </button>
         </div>
         <div class="popup">
             <span th:text="'📘 ' + ${book.title}"></span><br/>

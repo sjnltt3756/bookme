@@ -21,7 +21,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/signup", "/login", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/", "/recommend", "/login", "/signup", "/css/**", "/images/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
@@ -30,7 +30,7 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/login?logout")
+                        .logoutSuccessUrl("/recommend")
                         .permitAll()
                 )
                 .userDetailsService(customUserDetailsService);
