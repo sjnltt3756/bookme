@@ -26,7 +26,7 @@ public class UserController {
             return "signup";
         }
 
-        userService.registerUser(username, password);
+        userService.signup(username, password);
         return "redirect:/login";
     }
 

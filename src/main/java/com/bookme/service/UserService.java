@@ -17,11 +17,15 @@ public class UserService {
         return userRepository.findByUsername(username).isPresent();
     }
 
-    public void registerUser(String username, String password) {
+    public void signup(String username, String password) {
         User user = User.builder()
                 .username(username)
                 .password(passwordEncoder.encode(password))
                 .build();
         userRepository.save(user);
+    }
+
+    public boolean isUsernameTaken(String username) {
+        return userRepository.existsByUsername(username);
     }
 }
