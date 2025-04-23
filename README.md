@@ -1,7 +1,7 @@
 # 📘 BookMe - 도서 추천 웹 프로젝트
 
-**BookMe**는 사용자의 선호 장르를 기반으로 책을 추천하고, Google Books API를 통해 도서를 검색할 수 있는 웹 프로젝트 입니다.  
-
+**BookMe**는 사용자의 선호 장르를 기반으로 책을 추천하고,  
+Google Books API를 통해 도서를 검색할 수 있는 웹 프로젝트입니다.
 
 ---
 
@@ -29,6 +29,9 @@
 - 📚 선호 장르 기반 도서 추천 자동 제공
 - 📄 페이지네이션 + 보기 수 선택 기능 (8 / 16 / 24개)
 - ❤️ 도서 찜하기 및 찜한 책 목록 관리 (중복 방지 및 토글 지원)
+- 📌 로그인 여부에 따른 상단 로그인 / 로그아웃 버튼 표시
+- 🚫 비로그인 시 찜하기 / 찜목록 접근 시 알림창 + 로그인 유도
+- 🏠 첫 진입 시 자동 `/recommend` 페이지로 리다이렉트
 
 ---
 
@@ -42,6 +45,7 @@ src
     │       ├── config
     │       │   └── SecurityConfig.java            # Spring Security 설정
     │       ├── controller
+    │       │   ├── HomeController.java            # 첫 페이지 리다이렉트 컨트롤러
     │       │   ├── PreferenceController.java      # 장르 설정 컨트롤러
     │       │   ├── RecommendController.java       # 추천/검색 페이지 컨트롤러
     │       │   ├── UserController.java            # 로그인/회원가입 처리
@@ -86,6 +90,8 @@ src
     │   └── application.yml                        # 환경설정 파일
 </pre>
 
+---
+
 ## 📸 스크린샷
 
 ### 🔐 로그인
@@ -102,4 +108,3 @@ src
 
 ### 💖 찜한 책 목록
 ![찜한 책 화면](images/wishlist.png)
-
